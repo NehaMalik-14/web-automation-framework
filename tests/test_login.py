@@ -2,6 +2,7 @@ import pytest
 from selenium import webdriver
 from pages.login_page import LoginPage
 from utils.wait_helper import WaitHelper
+from utils.logger import Logger
 
 @pytest.fixture(scope="function")
 def driver():
@@ -17,3 +18,13 @@ def test_login_flow(driver):
 
     # TODO: Add assertion when actual app is used
     assert driver.current_url != ""
+
+log = Logger.get_logger(__name__)
+
+def test_login_flow(driver):
+    log.info("Starting login test")
+    login_page = LoginPage(driver)
+    login_page.login("testuser", "testpass")
+    log.info("Login submitted")
+    assert driver.current_url != ""
+    log.info("Test completed")
